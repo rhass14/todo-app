@@ -7,17 +7,17 @@ body {
 
 .filters {
   background-color: rgb(233, 203, 146);
-  padding: 15px;
+  padding: 12px;
 }
 
 .tasks {
   background-color: rgb(193, 193, 106);
-  padding: 15px;
+  padding: 12px;
 }
 
 button {
   background-color: white;
-  padding: 15px;
+  padding: 12px;
 }
 
 input {
