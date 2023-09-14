@@ -1,0 +1,25 @@
+html,
+body {
+  font-family: monospace;
+  margin: 0;
+  background-color: blanchedalmond;
+}
+
+.filters {
+  background-color: rgb(233, 203, 146);
+  padding: 15px;
+}
+
+.tasks {
+  background-color: rgb(193, 193, 106);
+  padding: 10px;
+}
+
+button {
+  background-color: white;
+  padding: 2px;
+}
+
+input {
+  padding: 2px;
+}
