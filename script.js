@@ -6,8 +6,8 @@ const prepList = document.getElementById("prep-list");
 
 const state = {
   prepTasks: [
-    { description: "check passport validity", done: true, id: 1 },
-    { description: "pack camera", done: false, id: 2 },
+    { description: "check passport validity", done: false, id: 1 },
+    { description: "pack camera", done: true, id: 2 },
   ],
 };
 
@@ -16,6 +16,7 @@ btnAdd.addEventListener("click", addPrepTask);
 // add tasks
 prepList.addEventListener("change", updateTask);
 
+//store tasks into local storage
 function restoreTasks() {
   const storedTasks = JSON.parse(localStorage.getItem("prepTasks"));
   console.log("storedTasks", storedTasks);
@@ -23,7 +24,6 @@ function restoreTasks() {
     state.prepTasks = storedTasks;
   }
 }
-
 function addPrepTask(event) {
   event.preventDefault();
 
@@ -36,7 +36,7 @@ function addPrepTask(event) {
   // push tasks
   state.prepTasks.push(newPrepTask);
 
-  //load tasks into local storage
+  //(re-)load tasks into local storage
   localStorage.setItem("prepTasks", JSON.stringify(state.prepTasks));
 
   restoreTasks();
@@ -47,7 +47,9 @@ function addPrepTask(event) {
 
 const prepFilter = document.querySelectorAll("#prep-filter-list input");
 prepFilter.forEach((prepFilter) => {
-  prepFilter.addEventListener("change", () => {});
+  prepFilter.addEventListener("change", () => {
+    renderPrepTasks();
+  });
 });
 
 function getSelectedFilter() {
@@ -66,8 +68,7 @@ function renderPrepTasks() {
   prepList.innerText = "";
 
   const selectedFilter = getSelectedFilter();
-
-  state.prepTasks.filter((prepTasks) => {
+  const filteredTasks = state.prepTasks.filter((prepTasks) => {
     if (selectedFilter === "all") {
       return true;
     } else if (selectedFilter === "done") {
@@ -77,7 +78,7 @@ function renderPrepTasks() {
     }
   });
 
-  state.prepTasks.forEach(function (prepTask) {
+  filteredTasks.forEach(function (prepTask) {
     const listEl = document.createElement("li");
 
     const checkbox = document.createElement("input");
@@ -110,16 +111,6 @@ function updateTask(event) {
   updatedTask.done = event.target.checked;
   console.log(state.prepTasks);
 }
+
 restoreTasks();
 renderPrepTasks();
-
-//remove all done task (button remove is clicked)
-
-//const btnRemove = document.getElementById("btn-remove");
-
-//function removeDuplicateTasks {
-//  if (prepTasks) {
-//    return prepTasks = prepTasks.filter
-//  }
-//}
-//  btnRemove.addEventListener("click", removeDuplicateItem);
