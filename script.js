@@ -1,8 +1,7 @@
 const prepDescription = document.getElementById("description");
 const btnAdd = document.getElementById("btn-add");
 const prepList = document.getElementById("prep-list");
-
-// tasks default state
+const btnRem = document.getElementById("btn-remove");
 
 const state = {
   prepTasks: [
@@ -13,10 +12,9 @@ const state = {
 
 btnAdd.addEventListener("click", addPrepTask);
 
-// add tasks
 prepList.addEventListener("change", updateTask);
+btnRem.addEventListener("click", removeDoneTodos);
 
-//store tasks into local storage
 function restoreTasks() {
   const storedTasks = JSON.parse(localStorage.getItem("prepTasks"));
   console.log("storedTasks", storedTasks);
@@ -33,18 +31,13 @@ function addPrepTask(event) {
     id: Math.floor(Math.random() * 5000000),
   };
 
-  // push tasks
   state.prepTasks.push(newPrepTask);
 
-  //(re-)load tasks into local storage
   localStorage.setItem("prepTasks", JSON.stringify(state.prepTasks));
 
   restoreTasks();
   renderPrepTasks();
 }
-
-// show tasks by selected filter
-
 const prepFilter = document.querySelectorAll("#prep-filter-list input");
 prepFilter.forEach((prepFilter) => {
   prepFilter.addEventListener("change", () => {
@@ -100,7 +93,6 @@ function renderPrepTasks() {
     prepList.appendChild(listEl);
   });
 }
-// read prepTaskID from DOM
 function updateTask(event) {
   const id = event.target.prepTaskId;
 
@@ -110,6 +102,17 @@ function updateTask(event) {
 
   updatedTask.done = event.target.checked;
   console.log(state.prepTasks);
+}
+
+function removeDoneTodos() {
+  const indexes = [];
+  for (let i = state.prepTasks.length - 1; i >= 0; i--) {
+    if (state.prepTasks[i].done === true) {
+      state.prepTasks.splice(i, 1);
+    }
+  }
+  renderPrepTasks();
+  localStorage.setItem("prepTasks", JSON.stringify(state.prepTasks));
 }
 
 restoreTasks();

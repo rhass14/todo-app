@@ -18,6 +18,7 @@ body {
 button {
   background-color: white;
   padding: 10px;
+  cursor: pointer;
 }
 
 input {
